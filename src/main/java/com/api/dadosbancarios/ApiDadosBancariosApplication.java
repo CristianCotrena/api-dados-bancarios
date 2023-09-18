@@ -13,7 +13,7 @@ public class ApiDadosBancariosApplication {
 		SpringApplication.run(ApiDadosBancariosApplication.class, args);
 	}
 
-	@GetMapping("/helloword")
+	@GetMapping("/")
 	public String helloWord(){
 		return "Hello word da api-dados-bancarios";
 	}
