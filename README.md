@@ -1,6 +1,6 @@
 <div align="center">
   <h2>
-    Este repositório se refere ao Micro Serviço ( API-Dados-bancarios) 
+    Este repositório se refere ao Micro Serviço ( API-dados-bancarios ) 
     <br>
     <br>
     parte do <u>Projeto Academia - NT Forma</u> 💪
@@ -74,8 +74,22 @@
 
 A API faz parte de um sistema de academia com as seguintes funcionalidades:
 
-- A ser implementado...
-- A ser implementado...
-- A ser implementado...
-- A ser implementado...
-- A ser implementado...
+### Etapa 1:
+✅ Implementado api-dados-bancarios
+
+---
+
+### Etapa 2:
+✅ Conexão com o banco de dados PostgreSQL na CloudService Railway
+
+✅ Implementado tabela de dados-bancarios basica (sem relacionamento com outras tabelas)
+
+
+---
+
+### Etapa 3:
+✅ A ser implementado...
+
+✅ A ser implementado...
+
+✅ A ser implementado...
