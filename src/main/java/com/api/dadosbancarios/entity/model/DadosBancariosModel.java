@@ -1,39 +1,40 @@
-package com.api.dadosbancarios.model;
+package com.api.dadosbancarios.entity.model;
 
 import jakarta.persistence.*;
-import javax.xml.crypto.Data;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
+
 @Entity
 @Table(name = "dadosBancarios")
-public class DadosbancariosMoldel implements Serializable {
+public class DadosBancariosModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID id;
     @Column(nullable = false, unique = true)
-    private UUID id_funcionario;
-    @Column(nullable = false, unique = true)
-    private UUID id_fornecedor;
-    @Column(nullable = false, unique = true)
+    private UUID idFuncionario;
+    @Column(unique = true)
+    private UUID idFornecedor;
+    @Column(nullable = false)
     private String agencia;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String banco;
     @Column(nullable = false, unique = true)
     private String conta;
     @Column(nullable = false, unique = true)
     private String nome;
     @Column(nullable = false)
-    private Date validade;
+    private LocalDate validade;
     @Column(nullable = false, columnDefinition = "int default 1")
-    private int status;
+    private Integer status;
 
-    public DadosbancariosMoldel(UUID id, UUID id_funcionario, UUID id_fornecedor, String agencia, String banco, String conta, String nome, Date validade, int status) {
+    public DadosBancariosModel() {
         this.id = id;
-        this.id_funcionario = id_funcionario;
-        this.id_fornecedor = id_fornecedor;
+        this.idFuncionario = idFuncionario;
+        this.idFornecedor = idFornecedor;
         this.agencia = agencia;
         this.banco = banco;
         this.conta = conta;
@@ -41,10 +42,6 @@ public class DadosbancariosMoldel implements Serializable {
         this.validade = validade;
         this.status = status;
     }
-
-    public DadosbancariosMoldel() {
-    }
-
 
     public UUID getId() {
         return id;
@@ -54,20 +51,20 @@ public class DadosbancariosMoldel implements Serializable {
         this.id = id;
     }
 
-    public UUID getId_funcionario() {
-        return id_funcionario;
+    public UUID getIdFuncionario() {
+        return idFuncionario;
     }
 
-    public void setId_funcionario(UUID id_funcionario) {
-        this.id_funcionario = id_funcionario;
+    public void setIdFuncionario(UUID idFuncionario) {
+        this.idFuncionario = idFuncionario;
     }
 
-    public UUID getId_fornecedor() {
-        return id_fornecedor;
+    public UUID getIdFornecedor() {
+        return idFornecedor;
     }
 
-    public void setId_fornecedor(UUID id_fornecedor) {
-        this.id_fornecedor = id_fornecedor;
+    public void setIdFornecedor(UUID idFornecedor) {
+        this.idFornecedor = idFornecedor;
     }
 
     public String getAgencia() {
@@ -102,19 +99,19 @@ public class DadosbancariosMoldel implements Serializable {
         this.nome = nome;
     }
 
-    public Date getValidade() {
+    public LocalDate getValidade() {
         return validade;
     }
 
-    public void setValidade(Date validade) {
+    public void setValidade(LocalDate validade) {
         this.validade = validade;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
