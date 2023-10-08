@@ -2,6 +2,7 @@ package com.api.dadosbancarios.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class DadosBancariosResponseDto implements Serializable {
@@ -13,10 +14,10 @@ public class DadosBancariosResponseDto implements Serializable {
     private String banco;
     private String agencia;
     private String conta;
-    private LocalDate validade;
+    private ZonedDateTime validade;
     private Integer status;
 
-    public DadosBancariosResponseDto(UUID id, UUID idFuncionario, UUID idFornecedor, String nome, String banco, String agencia, String conta, LocalDate validade, Integer status) {
+    public DadosBancariosResponseDto(UUID id, UUID idFuncionario, UUID idFornecedor, String nome, String banco, String agencia, String conta, ZonedDateTime validade, Integer status) {
         this.id = id;
         this.idFuncionario = idFuncionario;
         this.idFornecedor = idFornecedor;
@@ -87,11 +88,11 @@ public class DadosBancariosResponseDto implements Serializable {
         this.conta = conta;
     }
 
-    public LocalDate getValidade() {
+    public ZonedDateTime getValidade() {
         return validade;
     }
 
-    public void setValidade(LocalDate validade) {
+    public void setValidade(ZonedDateTime validade) {
         this.validade = validade;
     }
 

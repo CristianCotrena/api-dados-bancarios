@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class DadosBancariosServiceTest {
         dadosbancariosModel.setBanco("Bradesco");
         dadosbancariosModel.setAgencia("001");
         dadosbancariosModel.setConta("123456789");
-        dadosbancariosModel.setValidade(LocalDate.parse("2025-01-01"));
+        dadosbancariosModel.setValidade(ZonedDateTime.now().parse("2025-01-01"));
         dadosbancariosModel.setStatus(1);
     }
 

@@ -36,22 +36,19 @@ public class DadosBancariosService {
             return resultado.get().getBody();
         }
         if (dadosBancariosRepository.existsById(dadosbancariosRequestDto.getIdFuncionario())) {
-            erros.add(new BaseErrorDto("Id.", MensagensDeErros.DADO_JA_CADASTRADO));
+            erros.add(new BaseErrorDto("id.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
         if (dadosBancariosRepository.existsByNome(dadosbancariosRequestDto.getNome()).orElse(false)) {
-            erros.add(new BaseErrorDto("Nome.", MensagensDeErros.DADO_JA_CADASTRADO));
+            erros.add(new BaseErrorDto("nome.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
         if (dadosBancariosRepository.existsByBanco(dadosbancariosRequestDto.getBanco()).orElse(false)) {
-            erros.add(new BaseErrorDto("Banco.", MensagensDeErros.DADO_JA_CADASTRADO));
+            erros.add(new BaseErrorDto("banco.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
         if (dadosBancariosRepository.existsByAgencia(dadosbancariosRequestDto.getAgencia()).orElse(false)) {
-            erros.add(new BaseErrorDto("Agencia.", MensagensDeErros.DADO_JA_CADASTRADO));
+            erros.add(new BaseErrorDto("agencia.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
         if (dadosBancariosRepository.existsByConta(dadosbancariosRequestDto.getConta()).orElse(false)) {
-            erros.add(new BaseErrorDto("Conta.", MensagensDeErros.DADO_JA_CADASTRADO));
-        }
-        if (dadosBancariosRepository.existsByValidade(dadosbancariosRequestDto.getValidade()).orElse(false)) {
-            erros.add(new BaseErrorDto("Validade.", MensagensDeErros.DADO_JA_CADASTRADO));
+            erros.add(new BaseErrorDto("conta.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
 
         var dadosbancarios = new DadosBancariosTransforme().transformarParaDadosBancariosModel(dadosbancariosRequestDto);

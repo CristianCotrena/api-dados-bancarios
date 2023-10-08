@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/dadosbancarios")
 public class DadosBancariosController {
-
     @Autowired
     private DadosBancariosService dadosBancariosService;
 
