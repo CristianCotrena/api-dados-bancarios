@@ -1,9 +1,7 @@
 package com.api.dadosbancarios.dtos;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -20,12 +18,12 @@ public class DadosbancariosRequestDto {
     private String agencia;
     @Schema(description = "Número da conta", example = "165165654")
     private String conta;
-    @Schema(description = "Data de validade do cartao", example = "20/02")
+    @Schema(description = "Data de validade do cartao", example = "2025/02/20")
     private ZonedDateTime validade;
     @Schema(description = "Status da conta", example = "1")
     private Integer status;
 
-    public DadosbancariosRequestDto(UUID idFuncionario, UUID idFornecedor, String nome, String banco, String agencia, String conta, ZonedDateTime validade, Integer status) {
+    public DadosbancariosRequestDto(String nome) {
         this.idFuncionario = idFuncionario;
         this.idFornecedor = idFornecedor;
         this.nome = nome;
@@ -36,7 +34,6 @@ public class DadosbancariosRequestDto {
         this.status = status;
     }
 
-@JsonCreator
 public DadosbancariosRequestDto() {
     }
 

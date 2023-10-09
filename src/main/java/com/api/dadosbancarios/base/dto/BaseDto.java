@@ -1,6 +1,8 @@
 package com.api.dadosbancarios.base.dto;
 
 
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
 
 public class BaseDto<T> {
@@ -38,4 +40,5 @@ public class BaseDto<T> {
     public void setResultado(BaseResultDto resultado) {
         this.resultado = resultado;
     }
+
 }

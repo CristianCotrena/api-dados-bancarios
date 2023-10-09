@@ -4,7 +4,7 @@ import com.api.dadosbancarios.entity.model.DadosBancariosModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,11 +15,14 @@ public interface DadosBancariosRepository extends JpaRepository<DadosBancariosMo
 
     Optional<Boolean> existsByNome(String nome);
 
+    Optional<Boolean> existsByIdFuncionario(UUID idFuncionario);
+
+    Optional<Boolean> existsByIdFornecedor(UUID idFornecedor);
     Optional<Boolean> existsByConta(String conta);
 
     Optional<Boolean> existsByBanco(String banco);
 
-    Optional<Boolean> existsByValidade(LocalDate validade);
+    Optional<Boolean> existsByValidade(ZonedDateTime validade);
 
     Optional<Boolean> existsByAgencia(String agencia);
 

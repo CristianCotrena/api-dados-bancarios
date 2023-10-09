@@ -3,7 +3,6 @@ package com.api.dadosbancarios.entity.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 

@@ -16,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DadosBancariosService {
@@ -35,6 +37,24 @@ public class DadosBancariosService {
             ResponseErrorBuilder resultado = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, erros);
             return resultado.get().getBody();
         }
+
+        erros.addAll(verificarExistencia(dadosbancariosRequestDto));
+
+        if (!erros.isEmpty()) {
+            ResponseErrorBuilder resultado = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, erros);
+            return resultado.get().getBody();
+        }
+
+        var dadosbancarios = new DadosBancariosTransforme().transformarParaDadosBancariosModel(dadosbancariosRequestDto);
+
+        var savedDadosBancarios = dadosBancariosRepository.save(dadosbancarios);
+
+        return new ResponseSuccessBuilder<>(HttpStatus.CREATED, savedDadosBancarios, "Dados bancários cadastrados com sucesso.").get().getBody();
+    }
+
+    private List<BaseErrorDto> verificarExistencia(DadosbancariosRequestDto dadosbancariosRequestDto) {
+        List<BaseErrorDto> erros = new ArrayList<>();
+
         if (dadosBancariosRepository.existsById(dadosbancariosRequestDto.getIdFuncionario())) {
             erros.add(new BaseErrorDto("id.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
@@ -50,14 +70,9 @@ public class DadosBancariosService {
         if (dadosBancariosRepository.existsByConta(dadosbancariosRequestDto.getConta()).orElse(false)) {
             erros.add(new BaseErrorDto("conta.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
         }
-
-        var dadosbancarios = new DadosBancariosTransforme().transformarParaDadosBancariosModel(dadosbancariosRequestDto);
-
-        var savedDadosBancarios = dadosBancariosRepository.save(dadosbancarios);
-
-        return new ResponseSuccessBuilder<>(
-                HttpStatus.CREATED, savedDadosBancarios,
-                "Dados bancários cadastrados com sucesso."
-        ).get().getBody();
+        if (dadosBancariosRepository.existsByValidade(dadosbancariosRequestDto.getValidade()).orElse(false)) {
+            erros.add(new BaseErrorDto("validade.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
+        }
+        return erros;
     }
 }

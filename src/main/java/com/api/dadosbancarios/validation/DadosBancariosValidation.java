@@ -19,24 +19,24 @@ public class DadosBancariosValidation {
         List<BaseErrorDto> erros = new ArrayList<>();
 
         //Todo: Campos obrigatórios
-        if (dadosbancariosRequestDto.getNome() == null) {
-            erros.add(new BaseErrorDto("nome", MensagensDeErros.EMPTY_FIELD));
-        }
         if (dadosbancariosRequestDto.getIdFuncionario() == null && dadosbancariosRequestDto.getIdFornecedor() == null) {
             erros.add(new BaseErrorDto("idFuncionario", MensagensDeErros.EMPTY_FIELD));
             erros.add(new BaseErrorDto("idFornecedor", MensagensDeErros.EMPTY_FIELD));
         }
         if (dadosbancariosRequestDto.getIdFuncionario() != null && dadosbancariosRequestDto.getIdFornecedor() != null) {
-            erros.add(new BaseErrorDto("idFuncionario", MensagensDeErros.EMPTY_FIELD));
-            erros.add(new BaseErrorDto("idFornecedor", MensagensDeErros.EMPTY_FIELD));
+            erros.add(new BaseErrorDto("idFuncionario", "Os campos funcionário e fornecedor não podem aparecer simultaneamente."));
+            erros.add(new BaseErrorDto("idFornecedor", "Os campos funcionário e fornecedor não podem aparecer simultaneamente."));
         }
-        if (dadosbancariosRequestDto.getBanco() == null) {
+        if (dadosbancariosRequestDto.getNome() == null || dadosbancariosRequestDto.getNome().isEmpty()) {
+            erros.add(new BaseErrorDto("Nome.", MensagensDeErros.EMPTY_FIELD));
+        }
+        if (dadosbancariosRequestDto.getBanco() == null || dadosbancariosRequestDto.getBanco().isEmpty()) {
             erros.add(new BaseErrorDto("banco", MensagensDeErros.EMPTY_FIELD));
         }
-        if (dadosbancariosRequestDto.getAgencia() == null) {
+        if (dadosbancariosRequestDto.getAgencia() == null || dadosbancariosRequestDto.getAgencia().isEmpty()) {
             erros.add(new BaseErrorDto("agencia", MensagensDeErros.EMPTY_FIELD));
         }
-        if (dadosbancariosRequestDto.getConta() == null) {
+        if (dadosbancariosRequestDto.getConta() == null || dadosbancariosRequestDto.getConta().isEmpty()) {
             erros.add(new BaseErrorDto("conta", MensagensDeErros.EMPTY_FIELD));
         }
         if (dadosbancariosRequestDto.getValidade() == null) {
@@ -47,6 +47,12 @@ public class DadosBancariosValidation {
 
     //Todo: Campos inválidos
     public List<BaseErrorDto> validateCamposInvalidos(DadosbancariosRequestDto dadosbancariosRequestDto, List<BaseErrorDto> erros) {
+
+        if ((
+                (dadosbancariosRequestDto.getNome().split("\\s+").length) <= 1)
+                || (dadosbancariosRequestDto.getNome().replaceAll("\\s", "").length() < 6)) {
+            erros.add(new BaseErrorDto("Nome.", MensagensDeErros.INVALID_FIELD));
+        }
         if (dadosbancariosRequestDto.getValidade().isBefore(ZonedDateTime.now())) {
             erros.add(new BaseErrorDto("validade", MensagensDeErros.INVALID_FIELD));
         }

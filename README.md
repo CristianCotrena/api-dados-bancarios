@@ -118,6 +118,6 @@ http://localhost:8080/swagger-ui/index.html#/
 
 ✅ CRUD iniciado:
 
-- Implementado método `POST`
+✅ Implementado método `POST`
 
 ---

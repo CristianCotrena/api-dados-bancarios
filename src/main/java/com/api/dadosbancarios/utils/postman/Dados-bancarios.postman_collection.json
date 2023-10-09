@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "a31da99c-491a-4f2b-8c3c-a7487851df6a",
+		"name": "Dados-bancarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29484782",
+		"_collection_link": "https://galactic-equinox-55183.postman.co/workspace/Academia-NT-Form~f52aa576-8570-4b0d-88ba-4006af2c3cbe/collection/29484782-a31da99c-491a-4f2b-8c3c-a7487851df6a?action=share&source=collection_link&creator=29484782"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Valido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"2025-10-09T16:19:54.112+00:00\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(inválido) nome",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"2025-10-09T16:19:54.112+00:00\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(inválido) validade",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFornecedor\":\"2e82bd25-8370-42fe-b557-d7cff0acd918\",\r\n    \"nome\": \"Vinicius M\",\r\n    \"banco\": \"Inter\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"665566951\",\r\n    \"validade\":\"2023-10-29T14:30+03:00\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(obrigatório) id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"2025-10-09T17:21:17.189+00:00\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(obrigatório) banco",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"2023-10-06\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(obrigatório) agencia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"2023-10-06\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(obrigatório) conta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"\",\r\n    \"validade\":\"2023-10-06\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(obrigatório) validade",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idFuncionario\":\"2e10c1e5-8a6b-43e1-9f12-7136336e8657\",\r\n    \"nome\": \"Daniel Almeida\",\r\n    \"banco\": \"Bradesco\",\r\n    \"agencia\": \"0002\",\r\n    \"conta\": \"68462632355451\",\r\n    \"validade\":\"\",\r\n    \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/dadosbancarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"dadosbancarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
