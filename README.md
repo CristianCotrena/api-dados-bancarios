@@ -8,7 +8,6 @@
 </div>
 
 
-
 <div align="center">
     <table border="1">
         <tr>
@@ -107,17 +106,3 @@ A API faz parte de um sistema de academia com as seguintes funcionalidades:
 ```html
 http://localhost:8080/swagger-ui/index.html#/
 ```
-
-✅ Adicionado coleção inicial do POSTMAN que se encontra no diretório:
-
-```source-json
-/src/main/java/com/api/dadosbancarios/utils/postman/
-```
-
-✅ Implementados Testes Unitários
-
-✅ CRUD iniciado:
-
-✅ Implementado método `POST`
-
----
