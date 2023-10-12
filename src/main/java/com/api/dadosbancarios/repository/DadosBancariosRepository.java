@@ -26,4 +26,5 @@ public interface DadosBancariosRepository extends JpaRepository<DadosBancariosMo
 
     Optional<Boolean> existsByAgencia(String agencia);
 
+    boolean existsById(UUID idFuncionario);
 }
