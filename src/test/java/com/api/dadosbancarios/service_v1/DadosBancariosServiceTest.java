@@ -38,6 +38,7 @@ public class DadosBancariosServiceTest {
     DadosBancariosValidation dadosBancariosValidation = mock(DadosBancariosValidation.class);
     DadosBancariosService dadosBancariosService = new DadosBancariosService(dadosBancariosRepository);
 
+    @DisplayName("01 - Cadastrar Dados Bancários")
     @Test
     public void cadastrarDadosBancarios() {
         var request = new DadosbancariosRequestDto();// cria um objeto
@@ -56,6 +57,7 @@ public class DadosBancariosServiceTest {
         assertEquals("Dados bancários cadastrados com sucesso.", resultado.getResultado().getDescricao());
     }
 
+    @DisplayName("02 - Erro ao cadastrar id Funcionário existente")
     @Test
     public void erroAoCadastrarIdFuncionarioExistente() {
         var request = new DadosbancariosRequestDto(); //Cria um objeto DadosbancariosRequestDto.
@@ -76,6 +78,21 @@ public class DadosBancariosServiceTest {
         // Espera-se que, quando o ID do funcionário já existe, o método retorne um status de erro.
     }
 
+    @DisplayName("03 - Erro ao cadastrar id Fornecedor existente")
+    @Test
+    public void erroAoCadastrarIdFornecedorExistente() {
+        var request = new DadosbancariosRequestDto();
+
+        request.setIdFornecedor(randomUUID());
+
+        when(dadosBancariosRepository.existsById(request.getIdFornecedor())).thenReturn(true);
+
+        var resultado = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(BAD_REQUEST.value(), resultado.getResultado().getStatus());
+    }
+
+    @DisplayName("04 - Erro ao cadastrar nome existente")
     @Test
     public void testarErroAoCadastrarNomeExistente() {
         var request = new DadosbancariosRequestDto();
@@ -89,6 +106,7 @@ public class DadosBancariosServiceTest {
         assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("05 - Erro ao cadastrar conta existente")
     @Test
     public void testarErroAoCadastrarContaExistente() {
         var request = new DadosbancariosRequestDto();
@@ -102,6 +120,7 @@ public class DadosBancariosServiceTest {
         assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("06 - Erro ao cadastrar validade existente")
     @Test
     public void testarErroAoCadastrarValidadeExistente() {
         var request = new DadosbancariosRequestDto();
@@ -115,6 +134,7 @@ public class DadosBancariosServiceTest {
         assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("07 - Erro na Validação")
     @Test
     public void testarErroDeValidacao() {
         var request = new DadosbancariosRequestDto();

@@ -34,7 +34,7 @@ public class DadosbancariosRequestDto {
         this.status = status;
     }
 
-public DadosbancariosRequestDto() {
+    public DadosbancariosRequestDto() {
     }
 
     public UUID getIdFuncionario() {
