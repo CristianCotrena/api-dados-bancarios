@@ -11,13 +11,9 @@ import java.util.UUID;
 
 @Repository
 public interface DadosBancariosRepository extends JpaRepository<DadosBancariosModel, UUID> {
-    Optional<DadosBancariosModel> findByIdFuncionario(UUID idFuncionario);
 
     Optional<Boolean> existsByNome(String nome);
 
-    Optional<Boolean> existsByIdFuncionario(UUID idFuncionario);
-
-    Optional<Boolean> existsByIdFornecedor(UUID idFornecedor);
     Optional<Boolean> existsByConta(String conta);
 
     Optional<Boolean> existsByBanco(String banco);
@@ -26,4 +22,5 @@ public interface DadosBancariosRepository extends JpaRepository<DadosBancariosMo
 
     Optional<Boolean> existsByAgencia(String agencia);
 
+    boolean existsById(UUID idFuncionario);
 }

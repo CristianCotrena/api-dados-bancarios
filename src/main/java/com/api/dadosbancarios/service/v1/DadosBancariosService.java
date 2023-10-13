@@ -22,9 +22,9 @@ import java.util.Optional;
 
 @Service
 public class DadosBancariosService {
-    private DadosBancariosRepository dadosBancariosRepository;
 
-    @Autowired
+    private final DadosBancariosRepository dadosBancariosRepository;
+
     public DadosBancariosService(DadosBancariosRepository dadosBancariosRepository) {
         this.dadosBancariosRepository = dadosBancariosRepository;
     }

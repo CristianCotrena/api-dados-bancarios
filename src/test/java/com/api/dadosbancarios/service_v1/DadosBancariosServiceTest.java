@@ -10,8 +10,9 @@ import com.api.dadosbancarios.validation.DadosBancariosValidation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
@@ -20,106 +21,141 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static java.time.ZonedDateTime.now;
+import static java.util.UUID.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @DisplayName("DadosBancáriosService - Testes")
+@ExtendWith(MockitoExtension.class)
 public class DadosBancariosServiceTest {
-    @InjectMocks
-    private DadosBancariosService dadosBancariosService;
 
-    @Mock
-    private DadosBancariosRepository dadosBancariosRepository;
+    DadosBancariosRepository dadosBancariosRepository = mock(DadosBancariosRepository.class);
+    DadosBancariosValidation dadosBancariosValidation = mock(DadosBancariosValidation.class);
+    DadosBancariosService dadosBancariosService = new DadosBancariosService(dadosBancariosRepository);
 
-    @BeforeEach
-    public void setUp() {
-        dadosBancariosRepository = mock(DadosBancariosRepository.class);
-        dadosBancariosService = new DadosBancariosService(dadosBancariosRepository);
+    @DisplayName("01 - Cadastrar Dados Bancários")
+    @Test
+    public void cadastrarDadosBancarios() {
+        var request = new DadosbancariosRequestDto();// cria um objeto
 
-        DadosbancariosRequestDto dtoDadosBancarios = new DadosbancariosRequestDto();
-        dtoDadosBancarios.setIdFuncionario(UUID.fromString("5776b4fa-f29d-46b1-a4b7-caa0fb230ac5"));
-        dtoDadosBancarios.setNome("Gabrielly");
-        dtoDadosBancarios.setBanco("Bradesco");
-        dtoDadosBancarios.setAgencia("001");
-        dtoDadosBancarios.setConta("123456789");
-        dtoDadosBancarios.setValidade(ZonedDateTime.now().parse("2025-10-09T16:19:54.112+00:00"));
-        dtoDadosBancarios.setStatus(1);
+        request.setIdFuncionario(fromString("5776b4fa-f29d-46b1-a4b7-caa0fb230ac5"));
+        request.setNome("Gaby Venturini");
+        request.setBanco("Bradesco");
+        request.setAgencia("001");
+        request.setConta("123456789");
+        request.setValidade(ZonedDateTime.parse("2025-10-09T16:19:54.112+00:00"));
+        request.setStatus(1);
 
-        DadosBancariosModel dadosBancarios = new DadosBancariosModel();
+        var resultado = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(CREATED.value(), resultado.getResultado().getStatus());//Isso sugere que o código espera que o método tenha sucesso
+        assertEquals("Dados bancários cadastrados com sucesso.", resultado.getResultado().getDescricao());
     }
 
+    @DisplayName("02 - Erro ao cadastrar id Funcionário existente")
     @Test
-    public void testCadastrarDadosBancarios_IdJaExiste() {
-        DadosbancariosRequestDto dadosBancarios = new DadosbancariosRequestDto();
+    public void erroAoCadastrarIdFuncionarioExistente() {
+        var request = new DadosbancariosRequestDto(); //Cria um objeto DadosbancariosRequestDto.
 
-        when(dadosBancariosRepository.existsById(dadosBancarios.getIdFuncionario())).thenReturn(true);
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(dadosBancarios);
+        request.setIdFuncionario(randomUUID());// define um ID de funcionário aleatório para o objeto request.
+        //simula um cenário onde você está tentando cadastrar dados bancários para um funcionário com um ID que já existe no banco de dados.
 
-        assertEquals(HttpStatus.BAD_REQUEST, result.getResultado().getStatus());
+        when(dadosBancariosRepository.existsById(request.getIdFuncionario())).thenReturn(true);//Configura o comportamento simulado do seu repositório (dadosBancariosRepository)
+        // Isso simula o cenário em que o ID do funcionário já existe no banco de dados.
+
+
+        var resultado = dadosBancariosService.cadastrarDadosBancarios(request);//chama o método cadastrarDadosBancarios da classe DadosBancariosService, passando o objeto request como argumento.
+        // Este método deve verificar se o ID do funcionário já existe no banco de dados e, com base nessa verificação, retornar um resultado apropriado.
+
+
+        assertEquals(BAD_REQUEST.value(), resultado.getResultado().getStatus());//está usando a biblioteca de testes para verificar se o resultado retornado pelo método cadastrarDadosBancarios é um código HTTP 400 (BAD_REQUEST).
+        // Espera-se que, quando o ID do funcionário já existe, o método retorne um status de erro.
     }
 
-
+    @DisplayName("03 - Erro ao cadastrar id Fornecedor existente")
     @Test
-    public void testCadastrarDadosBancarios_NomeJaExiste() {
-        DadosbancariosRequestDto dadosBancarios = new DadosbancariosRequestDto();
+    public void erroAoCadastrarIdFornecedorExistente() {
+        var request = new DadosbancariosRequestDto();
 
-        when(dadosBancariosRepository.existsByNome(dadosBancarios.getNome())).thenReturn(Optional.of(true));
+        request.setIdFornecedor(randomUUID());
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(dadosBancarios);
+        when(dadosBancariosRepository.existsById(request.getIdFornecedor())).thenReturn(true);
 
-        assertEquals(HttpStatus.BAD_REQUEST, result.getResultado().getStatus());
+        var resultado = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(BAD_REQUEST.value(), resultado.getResultado().getStatus());
     }
 
+    @DisplayName("04 - Erro ao cadastrar nome existente")
     @Test
-    public void testCadastrarDadosBancarios_ContaJaExiste() {
-        DadosbancariosRequestDto dadosBancarios = new DadosbancariosRequestDto();
+    public void testarErroAoCadastrarNomeExistente() {
+        var request = new DadosbancariosRequestDto();
 
-        when(dadosBancariosRepository.existsByConta(dadosBancarios.getConta())).thenReturn(Optional.of(true));
+        request.setNome("Gaby Venturini");
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(dadosBancarios);
+        when(dadosBancariosRepository.existsByNome(request.getNome())).thenReturn(Optional.of(true));
 
-        assertEquals(HttpStatus.BAD_REQUEST, result.getResultado().getStatus());
+        var result = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("05 - Erro ao cadastrar conta existente")
     @Test
-    public void testCadastrarDadosBancarios_ValidadeJaExiste() {
-        DadosbancariosRequestDto dadosBancarios = new DadosbancariosRequestDto();
+    public void testarErroAoCadastrarContaExistente() {
+        var request = new DadosbancariosRequestDto();
 
-        when(dadosBancariosRepository.existsByValidade(dadosBancarios.getValidade())).thenReturn(Optional.of(true));
+        request.setConta("123456789");
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(dadosBancarios);
+        when(dadosBancariosRepository.existsByConta(request.getConta())).thenReturn(Optional.of(true));
 
-        assertEquals(HttpStatus.BAD_REQUEST, result.getResultado().getStatus());
+        var result = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("06 - Erro ao cadastrar validade existente")
     @Test
-    public void testCadastrarDadosBancarios_Sucesso() {
-        DadosbancariosRequestDto requestDto = new DadosbancariosRequestDto();
+    public void testarErroAoCadastrarValidadeExistente() {
+        var request = new DadosbancariosRequestDto();
 
-        when(dadosBancariosRepository.existsById(requestDto.getIdFuncionario())).thenReturn(false);
-        when(dadosBancariosRepository.existsByNome(requestDto.getNome())).thenReturn(Optional.of(false));
-        when(dadosBancariosRepository.existsByConta(requestDto.getConta())).thenReturn(Optional.of(false));
-        when(dadosBancariosRepository.existsByValidade(requestDto.getValidade())).thenReturn(Optional.of(false));
-        when(dadosBancariosRepository.save(any(DadosBancariosModel.class))).thenReturn(new DadosBancariosModel());
+        request.setValidade(ZonedDateTime.parse("2025-10-09T16:19:54.112+00:00"));
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(requestDto);
+        when(dadosBancariosRepository.existsByValidade(request.getValidade())).thenReturn(Optional.of(true));
 
-        assertEquals(HttpStatus.CREATED, result.getResultado().getStatus());
+        var result = dadosBancariosService.cadastrarDadosBancarios(request);
+
+        assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
 
+    @DisplayName("07 - Erro na Validação")
     @Test
-    public void testCadastrarDadosBancarios_ErroValidacao() {
-        DadosbancariosRequestDto requestDto = new DadosbancariosRequestDto();
+    public void testarErroDeValidacao() {
+        var request = new DadosbancariosRequestDto();
+
+        request.setIdFuncionario(fromString("5776b4fa-f29d-46b1-a4b7-caa0fb230ac5"));
+        request.setNome("Gaby Venturini");
+        request.setBanco("Bradesco");
+        request.setAgencia("001");
+        request.setConta("123456789");
+        request.setValidade(now().parse("2025-10-09T16:19:54.112+00:00"));
+        request.setStatus(1);
+
         List<BaseErrorDto> validationErrors = new ArrayList<>();
         validationErrors.add(new BaseErrorDto("campo", "mensagem de erro"));
 
-        when(new DadosBancariosValidation().validate(requestDto)).thenReturn(validationErrors);
+        when(dadosBancariosRepository.existsByValidade(request.getValidade())).thenReturn(Optional.of(true));
+        when(dadosBancariosValidation.validate(request)).thenReturn(validationErrors);
 
-        BaseDto result = dadosBancariosService.cadastrarDadosBancarios(requestDto);
+        var result = dadosBancariosService.cadastrarDadosBancarios(request);
 
-        assertEquals(HttpStatus.BAD_REQUEST, result.getResultado().getStatus());
+        assertEquals(BAD_REQUEST.value(), result.getResultado().getStatus());
     }
+
 }
