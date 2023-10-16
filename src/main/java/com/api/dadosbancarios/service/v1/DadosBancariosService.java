@@ -38,8 +38,6 @@ public class DadosBancariosService {
             return resultado.get().getBody();
         }
 
-        erros.addAll(verificarExistencia(dadosbancariosRequestDto));
-
         if (!erros.isEmpty()) {
             ResponseErrorBuilder resultado = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, erros);
             return resultado.get().getBody();
@@ -52,27 +50,4 @@ public class DadosBancariosService {
         return new ResponseSuccessBuilder<>(HttpStatus.CREATED, savedDadosBancarios, "Dados bancários cadastrados com sucesso.").get().getBody();
     }
 
-    private List<BaseErrorDto> verificarExistencia(DadosbancariosRequestDto dadosbancariosRequestDto) {
-        List<BaseErrorDto> erros = new ArrayList<>();
-
-        if (dadosBancariosRepository.existsById(dadosbancariosRequestDto.getIdFuncionario())) {
-            erros.add(new BaseErrorDto("id.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        if (dadosBancariosRepository.existsByNome(dadosbancariosRequestDto.getNome()).orElse(false)) {
-            erros.add(new BaseErrorDto("nome.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        if (dadosBancariosRepository.existsByBanco(dadosbancariosRequestDto.getBanco()).orElse(false)) {
-            erros.add(new BaseErrorDto("banco.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        if (dadosBancariosRepository.existsByAgencia(dadosbancariosRequestDto.getAgencia()).orElse(false)) {
-            erros.add(new BaseErrorDto("agencia.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        if (dadosBancariosRepository.existsByConta(dadosbancariosRequestDto.getConta()).orElse(false)) {
-            erros.add(new BaseErrorDto("conta.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        if (dadosBancariosRepository.existsByValidade(dadosbancariosRequestDto.getValidade()).orElse(false)) {
-            erros.add(new BaseErrorDto("validade.", MensagensDeErros.FIELD_ALREADY_REGISTERED));
-        }
-        return erros;
-    }
 }
